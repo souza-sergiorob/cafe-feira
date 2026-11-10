@@ -1,7 +1,7 @@
 {
-  "name": "Café Mobile",
-  "short_name": "Café Mobile",
-  "description": "Cardápio, pedidos e fotos da cafeteria",
+  "name": "Café Feira — Caixa",
+  "short_name": "Café Feira",
+  "description": "Caixa da cafeteria para vendas em feiras",
   "lang": "pt-BR",
   "start_url": "./index.html",
   "scope": "./",

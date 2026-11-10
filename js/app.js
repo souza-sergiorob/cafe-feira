@@ -1,6 +1,5 @@
 // ==========================================================
-// app.js - Dia 6 (versão final): abas, pedido, localStorage e vibração
-// (a câmera fica em camera.js)
+// app.js - Café Feira (caixa): abas, cardápio, pedido, localStorage e vibração
 // ==========================================================
 
 // ---------- Utilidades ----------
@@ -43,11 +42,6 @@ function abrirTela(idTela) {
     aba.classList.toggle("ativa", aba.dataset.tela === idTela);
   }
   window.scrollTo(0, 0);
-
-  // Saiu da tela da câmera? Desliga a câmera para economizar bateria
-  if (idTela !== "tela-camera") {
-    desligarCamera(); // função que está em camera.js
-  }
 }
 
 for (const aba of abas) {
@@ -103,8 +97,13 @@ for (const botao of botoesFiltro) {
 // localStorage só guarda TEXTO. Por isso usamos JSON:
 //   JSON.stringify(lista) -> transforma a lista em texto
 //   JSON.parse(texto)     -> transforma o texto de volta em lista
+//
+// Todas as chaves do app começam com "cafeFeira." (decisão D9): o app divide o
+// domínio souza-sergiorob.github.io com o app da aula, que usa a chave "pedido".
+const CHAVE_PEDIDO = "cafeFeira.pedido";
+
 function carregarPedido() {
-  const salvo = localStorage.getItem("pedido");
+  const salvo = localStorage.getItem(CHAVE_PEDIDO);
   if (salvo) {
     return JSON.parse(salvo);
   }
@@ -112,7 +111,7 @@ function carregarPedido() {
 }
 
 function salvarPedido() {
-  localStorage.setItem("pedido", JSON.stringify(pedido));
+  localStorage.setItem(CHAVE_PEDIDO, JSON.stringify(pedido));
 }
 
 // Cada item do pedido: { id, nome, preco, quantidade }

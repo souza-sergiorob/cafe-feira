@@ -6,7 +6,11 @@
 // ==========================================================
 
 // Mude o número da versão sempre que alterar a lista de arquivos abaixo
-const CACHE = "cafe-mobile-v2";
+// (também ao incluir ou trocar uma imagem de produto em img/produtos/)
+const CACHE = "cafe-feira-v1";
+
+// Prefixo de todos os caches deste app (decisão D9)
+const PREFIXO_CACHE = "cafe-feira-";
 
 const ARQUIVOS = [
   "./",
@@ -14,11 +18,12 @@ const ARQUIVOS = [
   "./css/style.css",
   "./js/dados.js",
   "./js/app.js",
-  "./js/camera.js",
   "./js/pwa.js",
   "./manifest.json",
   "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "./icons/icon-512.png",
+  "./icons/icon-maskable-512.png",
+  "./img/produtos/padrao.webp"
 ];
 
 // 1) INSTALAÇÃO: baixa e guarda todos os arquivos do app no cache
@@ -31,13 +36,17 @@ self.addEventListener("install", function (evento) {
   self.skipWaiting(); // ativa a nova versão sem esperar fechar o app
 });
 
-// 2) ATIVAÇÃO: apaga caches de versões antigas
+// 2) ATIVAÇÃO: apaga caches de versões antigas DESTE app.
+// O domínio souza-sergiorob.github.io é dividido com o app da aula (cache "cafe-mobile-..."),
+// por isso só apagamos caches que começam com "cafe-feira-".
 self.addEventListener("activate", function (evento) {
   evento.waitUntil(
     caches.keys().then(function (nomes) {
       return Promise.all(
         nomes
-          .filter(function (nome) { return nome !== CACHE; })
+          .filter(function (nome) {
+            return nome.startsWith(PREFIXO_CACHE) && nome !== CACHE;
+          })
           .map(function (nome) { return caches.delete(nome); })
       );
     })

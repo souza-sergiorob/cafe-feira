@@ -1,30 +1,25 @@
-# ☕ Café Mobile
+# ☕ Café Feira — Caixa
 
-PWA de cafeteria feita com HTML, CSS e JavaScript durante o curso de
-Desenvolvimento Mobile Híbrido.
+PWA de caixa para as vendas da cafeteria em feiras (3 celulares + 1 computador).
+Feito com HTML, CSS e JavaScript puro, a partir do app Café Mobile das aulas.
+
+A especificação completa está em [especificacao-pwa-cafeteria.md](especificacao-pwa-cafeteria.md).
 
 ## 🔗 Acesse o app
-https://[seu-usuario].github.io/cafe-mobile/
+https://souza-sergiorob.github.io/cafe-feira/
 
-## ✨ Funcionalidades
+## ✨ O que faz hoje (em desenvolvimento)
 - Cardápio com filtro por categoria
-- Pedido com total, salvo no celular (localStorage)
+- Pedido com total, salvo no aparelho (localStorage)
 - Vibração ao adicionar itens (Android)
-- Câmera para fotografar o café e montar uma galeria
 - Funciona offline e pode ser instalado na tela inicial
-- Compartilhar o pedido e as fotos
+- Compartilhar o pedido
 
 ## 📱 Como instalar
-- **Android:** abra o link no Chrome e toque em "Instalar".
+- **Android / computador:** abra o link no Chrome ou Edge e toque em "Instalar".
 - **iPhone:** abra no Safari, toque em Compartilhar → "Adicionar à Tela de Início".
 
 ## 🛠️ Tecnologias
 - HTML, CSS e JavaScript
 - Manifest e Service Worker (PWA)
-- APIs: Câmera (getUserMedia), Vibração, Web Share
-
-## 🚀 Desafio escolhido
-[Descreva aqui a funcionalidade extra que você criou]
-
-## 👤 Autor
-[Seu nome] - [Turma] - [Ano]
+- Google Apps Script + Google Planilhas (nas próximas etapas)

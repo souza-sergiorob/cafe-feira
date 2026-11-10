@@ -1,5 +1,5 @@
 // ==========================================================
-// pwa.js - Dia 6 (versão final): Service Worker, instalação e compartilhamento
+// pwa.js - Café Feira: Service Worker, botão Instalar, compartilhar pedido e aviso de offline
 // ==========================================================
 
 // ---------- 1. Registrar o Service Worker ----------
@@ -42,14 +42,14 @@ btnInstalar.addEventListener("click", async function () {
 });
 
 window.addEventListener("appinstalled", function () {
-  mostrarAviso("☕ Café Mobile instalado!");
+  mostrarAviso("☕ Café Feira instalado!");
 });
 
 // ---------- 3. Compartilhar (Web Share API) ----------
 // Abre a janela nativa de compartilhamento do celular (WhatsApp, e-mail...)
 
 function montarResumoPedido() {
-  let texto = "☕ Meu pedido no Café Mobile:\n";
+  let texto = "☕ Pedido no Café Feira:\n";
   for (const item of pedido) {
     texto = texto + item.quantidade + "x " + item.nome + " - " + formatarPreco(item.preco * item.quantidade) + "\n";
   }
@@ -74,24 +74,6 @@ async function compartilharPedido() {
 }
 
 document.querySelector("#btn-compartilhar-pedido").addEventListener("click", compartilharPedido);
-
-async function compartilharFoto(foto) {
-  // Transforma a imagem guardada (texto base64) em um arquivo de verdade
-  const resposta = await fetch(foto.imagem);
-  const blob = await resposta.blob();
-  const arquivo = new File([blob], "meu-cafe.jpg", { type: "image/jpeg" });
-
-  // canShare verifica se o aparelho consegue compartilhar ARQUIVOS
-  if (navigator.canShare && navigator.canShare({ files: [arquivo] })) {
-    try {
-      await navigator.share({ files: [arquivo], title: "Meu café", text: "Olha o meu café! ☕" });
-    } catch (erro) {
-      console.log("Compartilhamento cancelado");
-    }
-  } else {
-    mostrarAviso("Este aparelho não compartilha imagens");
-  }
-}
 
 // ---------- 4. EXTRA do dia 6: aviso de offline ----------
 // navigator.onLine diz se há conexão; os eventos avisam quando ela muda
