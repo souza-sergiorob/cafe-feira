@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6f4e37">
+  <title>Café Mobile</title>
+  <!-- PWA: o manifest descreve o app (nome, ícone, cores) para o celular -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <!-- iPhone não usa os ícones do manifest: precisa desta linha -->
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="topo">
+    <h1>☕ Café Mobile</h1>
+    <!-- Só aparece quando o navegador permite instalar (ver pwa.js) -->
+    <button id="btn-instalar" class="btn-instalar" hidden>Instalar</button>
+  </header>
+
+  <!-- EXTRA do dia 6: aparece quando o celular fica sem internet -->
+  <div id="faixa-offline" class="faixa-offline" hidden>📴 Você está offline. O app continua funcionando!</div>
+
+  <main>
+    <!-- ===== Tela 1: Cardápio ===== -->
+    <section id="tela-cardapio" class="tela">
+      <div class="filtros">
+        <button class="filtro ativo" data-categoria="Todos">Todos</button>
+        <button class="filtro" data-categoria="Cafés">Cafés</button>
+        <button class="filtro" data-categoria="Geladas">Geladas</button>
+        <button class="filtro" data-categoria="Salgados">Salgados</button>
+        <button class="filtro" data-categoria="Doces">Doces</button>
+      </div>
+      <div id="lista-produtos" class="lista-produtos"></div>
+    </section>
+
+    <!-- ===== Tela 2: Pedido (começa escondida com "hidden") ===== -->
+    <section id="tela-pedido" class="tela" hidden>
+      <h2>Seu pedido</h2>
+      <ul id="lista-pedido" class="lista-pedido"></ul>
+      <div class="total">
+        <span>Total</span>
+        <strong id="total-pedido">R$ 0,00</strong>
+      </div>
+      <button id="btn-finalizar" class="btn-principal">Finalizar pedido</button>
+      <button id="btn-compartilhar-pedido" class="btn-secundario">📤 Compartilhar pedido</button>
+    </section>
+    <!-- ===== Tela 3: Meu Café (câmera) ===== -->
+    <section id="tela-camera" class="tela" hidden>
+      <h2>Meu Café</h2>
+      <p class="dica">Fotografe seu café e monte sua galeria.</p>
+
+      <!-- Onde aparece a imagem ao vivo da câmera -->
+      <div id="area-camera" class="area-camera">
+        <!-- playsinline: no iPhone, evita abrir o vídeo em tela cheia -->
+        <video id="video" autoplay playsinline muted></video>
+        <p class="camera-desligada">📷 Câmera desligada</p>
+      </div>
+
+      <!-- Canvas invisível: usado para "congelar" um quadro do vídeo -->
+      <canvas id="canvas" hidden></canvas>
+
+      <div class="botoes-camera">
+        <button id="btn-ligar-camera" class="btn-principal">Ligar câmera</button>
+        <button id="btn-foto" class="btn-foto" aria-label="Tirar foto" disabled></button>
+        <button id="btn-trocar-camera" class="btn-secundario" disabled>🔄 Trocar</button>
+      </div>
+
+      <!-- Jeito mais simples: abre o app de câmera do próprio celular -->
+      <label class="btn-secundario btn-arquivo">
+        📁 Usar o app de câmera
+        <input type="file" id="input-foto" accept="image/*" capture="environment">
+      </label>
+
+      <h3>Galeria</h3>
+      <div id="galeria" class="galeria"></div>
+    </section>
+  </main>
+
+  <!-- ===== Barra de abas, fixa embaixo, como nos apps ===== -->
+  <nav class="abas">
+    <button class="aba ativa" data-tela="tela-cardapio">☕<span>Cardápio</span></button>
+    <button class="aba" data-tela="tela-pedido">🧾<span>Pedido</span>
+      <span id="contador-pedido" class="contador" hidden>0</span>
+    </button>
+    <button class="aba" data-tela="tela-camera">📷<span>Meu Café</span></button>
+  </nav>
+
+  <!-- Mensagem rápida que aparece e some (toast) -->
+  <div id="aviso" class="aviso" role="status"></div>
+
+  <script src="js/dados.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/camera.js"></script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

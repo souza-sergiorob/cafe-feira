@@ -1,0 +1,509 @@
+/* ==========================================================
+   Café Mobile - estilos
+   Mobile-first: escrevemos primeiro para a tela do celular.
+   ========================================================== */
+
+/* Variáveis de cor: mude aqui para personalizar o app inteiro */
+:root {
+  --cor-principal: #6f4e37;   /* marrom café */
+  --cor-destaque: #d4a373;    /* caramelo */
+  --cor-fundo: #fff8f0;       /* creme */
+  --cor-card: #ffffff;
+  --cor-texto: #2b2118;
+  --cor-texto-suave: #7a6a5c;
+  --raio: 14px;
+  --sombra: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Faz padding e borda contarem dentro da largura */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.4;
+}
+
+main {
+  padding: 16px;
+  max-width: 600px;     /* no computador, não fica largo demais */
+  margin: 0 auto;
+}
+
+/* ---------- Topo ---------- */
+.topo {
+  position: sticky;      /* fica preso no topo ao rolar */
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--cor-principal);
+  color: #fff;
+}
+
+.topo h1 {
+  font-size: 1.3rem;
+}
+
+/* ---------- Filtros de categoria ---------- */
+.filtros {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;      /* rolagem lateral no celular */
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.filtro {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border: 1px solid var(--cor-principal);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cor-principal);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.filtro.ativo {
+  background: var(--cor-principal);
+  color: #fff;
+}
+
+/* ---------- Cards de produto ---------- */
+.lista-produtos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--cor-card);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.card-emoji {
+  font-size: 2.4rem;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cor-fundo);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.card-info {
+  flex: 1;               /* ocupa o espaço que sobrar */
+}
+
+.card-info h3 {
+  font-size: 1.05rem;
+}
+
+.card-info p {
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+}
+
+.card-info strong {
+  color: var(--cor-principal);
+}
+
+.btn-adicionar {
+  width: 44px;           /* 44px = tamanho mínimo confortável para o dedo */
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--cor-destaque);
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.btn-adicionar:active {
+  transform: scale(0.9); /* "afunda" ao tocar */
+}
+
+/* Telas maiores: dois cards por linha */
+@media (min-width: 700px) {
+  main {
+    max-width: 900px;
+  }
+  .lista-produtos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---------- Telas e abas de navegação ---------- */
+main {
+  padding-bottom: 90px;  /* espaço para a barra de abas */
+}
+
+.tela h2 {
+  margin-bottom: 12px;
+}
+
+.abas {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: #fff;
+  border-top: 1px solid #eadfd3;
+  padding-bottom: env(safe-area-inset-bottom); /* iPhone com "barrinha" */
+}
+
+.aba {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 0 10px;
+  border: none;
+  background: none;
+  font-size: 1.4rem;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+}
+
+.aba span {
+  font-size: 0.75rem;
+}
+
+.aba.ativa {
+  color: var(--cor-principal);
+  font-weight: bold;
+}
+
+.contador {
+  position: absolute;
+  top: 4px;
+  left: 55%;
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #c0392b;
+  color: #fff;
+  font-size: 0.7rem !important;
+  line-height: 20px;
+}
+
+/* ---------- Pedido ---------- */
+.lista-pedido {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.item-pedido {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--cor-card);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.item-pedido .nome {
+  flex: 1;
+}
+
+.item-pedido small {
+  display: block;
+  color: var(--cor-texto-suave);
+}
+
+.btn-qtd {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--cor-principal);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--cor-principal);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.vazio {
+  padding: 24px;
+  text-align: center;
+  color: var(--cor-texto-suave);
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+.btn-principal,
+.btn-secundario {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--raio);
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.btn-principal {
+  border: none;
+  background: var(--cor-principal);
+  color: #fff;
+}
+
+.btn-secundario {
+  border: 2px solid var(--cor-principal);
+  background: transparent;
+  color: var(--cor-principal);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---------- Aviso rápido (toast) ---------- */
+.aviso {
+  position: fixed;
+  left: 50%;
+  bottom: 90px;
+  transform: translate(-50%, 20px);
+  max-width: 90%;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--cor-texto);
+  color: var(--cor-fundo);
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.aviso.visivel {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ---------- Câmera ---------- */
+.dica {
+  color: var(--cor-texto-suave);
+  margin-bottom: 12px;
+}
+
+.area-camera {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #1e1e1e;
+  border-radius: var(--raio);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.area-camera video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.area-camera.ligada video {
+  display: block;
+}
+
+.area-camera.ligada .camera-desligada {
+  display: none;
+}
+
+.camera-desligada {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+}
+
+/* Câmera frontal: espelha como um espelho de verdade */
+video.espelhado {
+  transform: scaleX(-1);
+}
+
+/* "Flash" branco ao tirar a foto */
+.area-camera.flash::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  animation: flash 0.3s ease-out forwards;
+}
+
+@keyframes flash {
+  from { opacity: 0.9; }
+  to { opacity: 0; }
+}
+
+.botoes-camera {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.botoes-camera .btn-principal,
+.botoes-camera .btn-secundario {
+  flex: 1;
+  margin: 0;
+  padding: 12px 6px;
+  font-size: 0.9rem;
+}
+
+/* Botão redondo de disparo, como nos apps de câmera */
+.btn-foto {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 5px solid var(--cor-destaque);
+  background: #fff;
+  cursor: pointer;
+}
+
+.btn-foto:active {
+  transform: scale(0.9);
+}
+
+.btn-arquivo input {
+  display: none;
+}
+
+.tela h3 {
+  margin: 20px 0 10px;
+}
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.foto {
+  position: relative;
+  background: var(--cor-card);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+}
+
+.foto img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.foto small {
+  display: block;
+  padding: 4px 6px;
+  font-size: 0.65rem;
+  color: var(--cor-texto-suave);
+}
+
+.galeria .vazio {
+  grid-column: 1 / -1;
+}
+
+/* ---------- Recursos de PWA ---------- */
+.btn-instalar {
+  padding: 6px 14px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.foto-acoes {
+  display: flex;
+}
+
+.foto-acoes button {
+  flex: 1;
+  padding: 6px 0;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* ---------- Extras do projeto final ---------- */
+
+/* Faixa que aparece quando o celular fica sem internet */
+.faixa-offline {
+  position: sticky;
+  top: 56px;
+  z-index: 9;
+  padding: 6px;
+  background: #c0392b;
+  color: #fff;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+/* Modo escuro automático: segue a configuração do celular */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cor-fundo: #1b1512;
+    --cor-card: #2a221d;
+    --cor-texto: #f3e9df;
+    --cor-texto-suave: #b8a796;
+    --sombra: none;
+  }
+  .abas {
+    background: var(--cor-card);
+    border-top-color: #3a2f28;
+  }
+  .btn-qtd {
+    background: var(--cor-card);
+  }
+  .filtro,
+  .btn-secundario,
+  .btn-qtd,
+  .card-info strong,
+  .aba.ativa {
+    color: var(--cor-destaque);
+    border-color: var(--cor-destaque);
+  }
+  .filtro.ativo {
+    background: var(--cor-destaque);
+    color: var(--cor-fundo);
+  }
+}
