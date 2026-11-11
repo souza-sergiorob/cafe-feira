@@ -255,8 +255,8 @@ Uma etapa por vez, testando antes de seguir para a próxima.
 
 ## 13. Status
 
-- [ ] Etapa 1 — Preparação
-- [ ] Etapa 2 — Tela de venda
+- [x] Etapa 1 — Preparação
+- [x] Etapa 2 — Tela de venda
 - [ ] Etapa 3 — Registro local
 - [ ] Etapa 4 — Configuração e PIN
 - [ ] Etapa 5 — Planilha + Apps Script

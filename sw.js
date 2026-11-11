@@ -6,24 +6,31 @@
 // ==========================================================
 
 // Mude o número da versão sempre que alterar a lista de arquivos abaixo
-// (também ao incluir ou trocar uma imagem de produto em img/produtos/)
-const CACHE = "cafe-feira-v1";
+// ou o conteúdo de qualquer arquivo dela.
+const CACHE = "cafe-feira-v2";
 
 // Prefixo de todos os caches deste app (decisão D9)
 const PREFIXO_CACHE = "cafe-feira-";
 
+// ATENÇÃO, imagens de produtos (img/produtos/):
+// - cada imagem NOVA tem que entrar nesta lista, senão não abre offline;
+// - ao incluir OU trocar uma imagem, suba a versão de CACHE acima.
+// Só liste arquivos que existem: se um faltar, o cache.addAll falha inteiro
+// e o app deixa de funcionar offline.
 const ARQUIVOS = [
   "./",
   "./index.html",
   "./css/style.css",
   "./js/dados.js",
+  "./js/pagamento.js",
   "./js/app.js",
   "./js/pwa.js",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
-  "./img/produtos/padrao.webp"
+  "./img/produtos/padrao.webp",
+  "./img/produtos/chemex.webp"
 ];
 
 // 1) INSTALAÇÃO: baixa e guarda todos os arquivos do app no cache
@@ -63,16 +70,30 @@ self.addEventListener("fetch", function (evento) {
   evento.respondWith(
     fetch(evento.request)
       .then(function (resposta) {
-        // Online: guarda uma cópia atualizada no cache e devolve a resposta
-        const copia = resposta.clone();
-        caches.open(CACHE).then(function (cache) {
-          cache.put(evento.request, copia);
-        });
+        // Online: guarda uma cópia atualizada no cache (só respostas OK,
+        // para não guardar um "404" de imagem que ainda não existe)
+        if (resposta.ok) {
+          const copia = resposta.clone();
+          caches.open(CACHE).then(function (cache) {
+            cache.put(evento.request, copia);
+          });
+        }
         return resposta;
       })
       .catch(function () {
         // Offline: devolve o que está no cache
-        return caches.match(evento.request, { ignoreSearch: true });
+        return caches.match(evento.request, { ignoreSearch: true }).then(function (guardada) {
+          if (guardada) {
+            return guardada; // inclui a navegação: "./" e "./index.html" estão na lista
+          }
+          // Abrir o app por um endereço que não está no cache: entrega o index.html
+          if (evento.request.mode === "navigate") {
+            return caches.match("./index.html");
+          }
+          // Arquivo que nunca foi guardado (ex.: imagem de produto ainda não publicada):
+          // devolve um erro de rede "limpo"; a imagem cai no onerror e mostra a padrão.
+          return Response.error();
+        });
       })
   );
 });

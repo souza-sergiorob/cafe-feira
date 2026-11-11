@@ -1,5 +1,5 @@
 // ==========================================================
-// pwa.js - Café Feira: Service Worker, botão Instalar, compartilhar pedido e aviso de offline
+// pwa.js - Café Feira: Service Worker, botão Instalar e aviso de offline
 // ==========================================================
 
 // ---------- 1. Registrar o Service Worker ----------
@@ -45,37 +45,7 @@ window.addEventListener("appinstalled", function () {
   mostrarAviso("☕ Café Feira instalado!");
 });
 
-// ---------- 3. Compartilhar (Web Share API) ----------
-// Abre a janela nativa de compartilhamento do celular (WhatsApp, e-mail...)
-
-function montarResumoPedido() {
-  let texto = "☕ Pedido no Café Feira:\n";
-  for (const item of pedido) {
-    texto = texto + item.quantidade + "x " + item.nome + " - " + formatarPreco(item.preco * item.quantidade) + "\n";
-  }
-  texto = texto + "Total: " + formatarPreco(calcularTotal());
-  return texto;
-}
-
-async function compartilharPedido() {
-  const texto = montarResumoPedido();
-
-  if (navigator.share) {
-    try {
-      await navigator.share({ title: "Meu pedido", text: texto });
-    } catch (erro) {
-      console.log("Compartilhamento cancelado");
-    }
-  } else {
-    // Computador sem suporte: copia o texto para a área de transferência
-    await navigator.clipboard.writeText(texto);
-    mostrarAviso("Resumo copiado! Cole onde quiser.");
-  }
-}
-
-document.querySelector("#btn-compartilhar-pedido").addEventListener("click", compartilharPedido);
-
-// ---------- 4. EXTRA do dia 6: aviso de offline ----------
+// ---------- 3. Aviso de offline ----------
 // navigator.onLine diz se há conexão; os eventos avisam quando ela muda
 const faixaOffline = document.querySelector("#faixa-offline");
 

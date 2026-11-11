@@ -94,16 +94,27 @@ main {
   box-shadow: var(--sombra);
 }
 
-.card-emoji {
-  font-size: 2.4rem;
-  width: 56px;
-  height: 56px;
+/* Quadro da imagem do produto (ou do emoji, se as imagens falharem) */
+.card-imagem {
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--cor-fundo);
   border-radius: 12px;
+  overflow: hidden;
   flex-shrink: 0;
+}
+
+.card-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-imagem.com-emoji {
+  font-size: 2.6rem;
 }
 
 .card-info {
@@ -289,6 +300,230 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* ---------- Pagamento ---------- */
+.painel-pagamento {
+  padding: 4px 12px 12px;
+  margin-bottom: 16px;
+  background: var(--cor-card);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+#painel-pagamento h3 {   /* id: vence a regra geral ".tela h3" */
+  margin: 12px 0 10px;
+}
+
+/* 4 formas em grade 2 x 2, botões grandes para o dedo */
+.formas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.btn-forma {
+  min-height: 52px;
+  padding: 8px;
+  border: 2px solid var(--cor-principal);
+  border-radius: var(--raio);
+  background: transparent;
+  color: var(--cor-principal);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-forma.ativa {
+  background: var(--cor-principal);
+  color: #fff;
+}
+
+.formas-pequenas .btn-forma {
+  min-height: 44px;
+  font-size: 0.9rem;
+}
+
+/* Botão discreto, com cara de link */
+.btn-link {
+  display: block;
+  margin: 10px auto 0;
+  padding: 10px;
+  min-height: 44px;
+  border: none;
+  background: none;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.rotulo {
+  display: block;
+  margin: 12px 0 6px;
+  font-size: 0.9rem;
+  color: var(--cor-texto-suave);
+}
+
+.lista-parcelas {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.parcela {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.parcela-forma {
+  flex: 1;
+  font-weight: bold;
+}
+
+.parcela input,
+.campo-valor {
+  width: 120px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 2px solid var(--cor-destaque);
+  border-radius: 10px;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-size: 1.1rem;
+  text-align: right;
+}
+
+.campo-valor {
+  width: 100%;
+  font-size: 1.4rem;
+}
+
+.btn-remover {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: #c0392b;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.situacao-divisao {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.situacao-divisao.erro {
+  color: #c0392b;
+}
+
+.situacao-divisao.ok {
+  color: #2e7d32;
+}
+
+.aviso-erro {
+  margin: 8px 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #fdecea;
+  color: #c0392b;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.area-dinheiro {
+  margin-top: 12px;
+  padding-top: 4px;
+  border-top: 1px solid #eadfd3;
+}
+
+.notas-rapidas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.btn-nota {
+  flex: 1;
+  min-width: 56px;
+  min-height: 44px;
+  border: 1px solid var(--cor-destaque);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--cor-texto);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.troco {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 12px;
+  font-size: 1.1rem;
+}
+
+.troco strong {
+  font-size: 1.8rem;
+  color: var(--cor-principal);
+}
+
+/* ---------- Venda concluída ---------- */
+.painel-conclusao {
+  padding: 20px 16px;
+  background: var(--cor-card);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  text-align: center;
+}
+
+.conclusao-titulo {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.conclusao-total,
+.conclusao-formas li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.conclusao-total {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.conclusao-formas {
+  list-style: none;
+  margin-bottom: 16px;
+  color: var(--cor-texto-suave);
+}
+
+/* Troco bem grande: é o que o operador precisa ver de longe */
+.conclusao-troco {
+  margin-bottom: 20px;
+  padding: 16px;
+  border-radius: var(--raio);
+  background: var(--cor-destaque);
+  color: #fff;
+}
+
+.conclusao-troco span {
+  display: block;
+  font-size: 1.1rem;
+}
+
+.conclusao-troco strong {
+  display: block;
+  font-size: 3rem;
+  line-height: 1.1;
+}
+
 /* ---------- Aviso rápido (toast) ---------- */
 .aviso {
   position: fixed;
@@ -367,5 +602,27 @@ button:disabled {
   .filtro.ativo {
     background: var(--cor-destaque);
     color: var(--cor-fundo);
+  }
+  .btn-forma,
+  .troco strong {
+    color: var(--cor-destaque);
+    border-color: var(--cor-destaque);
+  }
+  .btn-forma.ativa {
+    background: var(--cor-destaque);
+    color: var(--cor-fundo);
+  }
+  .area-dinheiro {
+    border-top-color: #3a2f28;
+  }
+  .aviso-erro {
+    background: #3b1f1c;
+    color: #ff8a80;
+  }
+  .situacao-divisao.erro {
+    color: #ff8a80;
+  }
+  .situacao-divisao.ok {
+    color: #81c784;
   }
 }

@@ -36,23 +36,81 @@
       <div id="lista-produtos" class="lista-produtos"></div>
     </section>
 
-    <!-- ===== Tela 2: Pedido (começa escondida com "hidden") ===== -->
+    <!-- ===== Tela 2: Venda (começa escondida com "hidden") ===== -->
     <section id="tela-pedido" class="tela" hidden>
-      <h2>Seu pedido</h2>
-      <ul id="lista-pedido" class="lista-pedido"></ul>
-      <div class="total">
-        <span>Total</span>
-        <strong id="total-pedido">R$ 0,00</strong>
+
+      <!-- Venda em andamento: itens, total, pagamento e confirmação -->
+      <div id="area-venda">
+        <h2>Venda atual</h2>
+        <ul id="lista-pedido" class="lista-pedido"></ul>
+        <div class="total">
+          <span>Total</span>
+          <strong id="total-pedido">R$ 0,00</strong>
+        </div>
+
+        <!-- Painel de pagamento: só aparece com pelo menos 1 item (ver pagamento.js) -->
+        <div id="painel-pagamento" class="painel-pagamento" hidden>
+          <h3>Cobrar</h3>
+
+          <!-- Forma única (o normal): os 4 botões são criados pelo pagamento.js -->
+          <div id="area-forma-unica">
+            <div id="formas-unica" class="formas"></div>
+            <button id="btn-dividir" class="btn-link">Dividir pagamento</button>
+          </div>
+
+          <!-- Pagamento dividido (raro): uma parcela por forma -->
+          <div id="area-dividida" hidden>
+            <p id="aviso-divisao" class="aviso-erro" hidden>O carrinho mudou: refaça a divisão do pagamento.</p>
+            <ul id="lista-parcelas" class="lista-parcelas"></ul>
+            <p id="situacao-divisao" class="situacao-divisao"></p>
+            <p class="rotulo">Adicionar forma:</p>
+            <div id="formas-adicionar" class="formas formas-pequenas"></div>
+            <button id="btn-cancelar-divisao" class="btn-link">Cancelar divisão</button>
+          </div>
+
+          <!-- Dinheiro: valor recebido e troco (só com parcela em Dinheiro) -->
+          <div id="area-dinheiro" class="area-dinheiro" hidden>
+            <label for="valor-recebido" class="rotulo">Valor recebido em dinheiro</label>
+            <input id="valor-recebido" class="campo-valor" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00">
+            <div class="notas-rapidas">
+              <button class="btn-nota" data-centavos="exato">Exato</button>
+              <button class="btn-nota" data-centavos="1000">R$ 10</button>
+              <button class="btn-nota" data-centavos="2000">R$ 20</button>
+              <button class="btn-nota" data-centavos="5000">R$ 50</button>
+              <button class="btn-nota" data-centavos="10000">R$ 100</button>
+            </div>
+            <p id="aviso-recebido" class="aviso-erro" hidden></p>
+            <div class="troco">
+              <span>Troco</span>
+              <strong id="valor-troco">R$ 0,00</strong>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-confirmar" class="btn-principal" disabled>Confirmar venda</button>
       </div>
-      <button id="btn-finalizar" class="btn-principal">Finalizar pedido</button>
-      <button id="btn-compartilhar-pedido" class="btn-secundario">📤 Compartilhar pedido</button>
+
+      <!-- Venda concluída: aparece depois de "Confirmar venda" -->
+      <div id="painel-conclusao" class="painel-conclusao" hidden>
+        <p class="conclusao-titulo">✅ Venda registrada</p>
+        <div class="conclusao-total">
+          <span>Total</span>
+          <strong id="conclusao-total">R$ 0,00</strong>
+        </div>
+        <ul id="conclusao-formas" class="conclusao-formas"></ul>
+        <div id="conclusao-troco" class="conclusao-troco" hidden>
+          <span>Troco</span>
+          <strong id="conclusao-troco-valor">R$ 0,00</strong>
+        </div>
+        <button id="btn-nova-venda" class="btn-principal">Nova venda</button>
+      </div>
     </section>
   </main>
 
   <!-- ===== Barra de abas, fixa embaixo, como nos apps ===== -->
   <nav class="abas">
     <button class="aba ativa" data-tela="tela-cardapio">☕<span>Cardápio</span></button>
-    <button class="aba" data-tela="tela-pedido">🧾<span>Pedido</span>
+    <button class="aba" data-tela="tela-pedido">🧾<span>Venda</span>
       <span id="contador-pedido" class="contador" hidden>0</span>
     </button>
   </nav>
@@ -60,7 +118,9 @@
   <!-- Mensagem rápida que aparece e some (toast) -->
   <div id="aviso" class="aviso" role="status"></div>
 
+  <!-- Ordem importa: pagamento.js antes do app.js (o app.js desenha a tela no fim) -->
   <script src="js/dados.js"></script>
+  <script src="js/pagamento.js"></script>
   <script src="js/app.js"></script>
   <script src="js/pwa.js"></script>
 </body>
